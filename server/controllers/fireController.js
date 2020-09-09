@@ -4,7 +4,6 @@ const { Fires } = require('../models/fireModel');
 const { BREEZOMETER_API } = process.env;
 
 async function getFires({ latitude, longitude }) {
-  console.log('RUNNING getFires()');
   try {
     let fires;
     const [result] = await Fires.find({ latitude, longitude });
@@ -21,7 +20,6 @@ async function getFires({ latitude, longitude }) {
         .filter(({ confidence }) => confidence === 'High')
         .map(({ position: { lat, lon } }) => ({ latitude: lat, longitude: lon }));
 
-      console.log(fires);
       Fires.create({ latitude, longitude, fires }).catch((err) =>
         console.error(
           `Error writing fires to database on request LAT(${latitude}) LON(${longitude}):\n${err}`
